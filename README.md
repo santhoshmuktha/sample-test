@@ -2,8 +2,8 @@
 
 This is a sample java test project provides the analysis of employees of the org interms of Salary and level order.
 
-# Assumptions
-- This app expected the well formatted csv, a sample mentioned at - `src\main\resources\employee.csv`
+## Assumptions
+- This app expects a well formatted csv, a sample mentioned at - `src\main\resources\employee.csv`
 ## Project Structure
 
 ```
