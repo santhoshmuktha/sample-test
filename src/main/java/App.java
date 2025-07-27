@@ -6,8 +6,18 @@ import java.io.FileReader;
 
 public class App {
     public static void main(String[] args) {
-        List<Employee> employees = App.loadEmployees("C:\\Users\\91984\\OneDrive\\Desktop\\JAVA\\git\\sample-test\\src\\main\\java\\employee.csv");
-        System.out.println(employees);
+        List<Employee> employees = App.loadEmployees("src/main/resources/employee.csv");
+        List<EmployeeDetails> salaryLessThan20Percent = App.employeesWithSalaryLessThan20PercentOfSubordinates(employees);
+        System.out.println("Employees with salary less than 20% of their subordinates' average");
+        System.out.println(salaryLessThan20Percent);
+
+        List<EmployeeDetails> salaryGreaterThan50Percent = App.employeesWithSalaryGreaterThan50PercentOfSubordinates(employees);
+        System.out.println("Employees with salary greater than 50% of their subordinates' average");
+        System.out.println(salaryGreaterThan50Percent);
+
+        List<EmployeeDetails> depthGreaterThanFour = App.employeesWithDepthGreaterThanFour(employees);
+        System.out.println("Employees with depth greater than four");
+        System.out.println(depthGreaterThanFour);
     }
 
     public static List<Employee> loadEmployees(String filePath) {
@@ -24,34 +34,59 @@ public class App {
         }
     }
 
-    public static List<Employee> employeesWithSalaryLessThan20PercentOfSubordinates(List<Employee> employees) {
-        List<Employee> result = new java.util.ArrayList<>();
+    public static List<EmployeeDetails> employeesWithSalaryLessThan20PercentOfSubordinates(List<Employee> employees) {
+        List<EmployeeDetails> result = new java.util.ArrayList<>();
         for (Employee emp : employees) {
+            EmployeeDetails eDetails = new EmployeeDetails();
+            eDetails.setId(emp.getId());
+            eDetails.setFirstName(emp.getFirstName());
+            eDetails.setLastName(emp.getLastName());
+            eDetails.setSalary(emp.getSalary());
+            eDetails.setManagerId(emp.getManagerId());
+
             double avgSubSalary = averageSalaryOfDirectSubordinates(employees, emp.getId());
-            if (avgSubSalary > 0 && emp.getSalary() < 0.2 * avgSubSalary) {
-                result.add(emp);
+            if (avgSubSalary > 0 && emp.getSalary() < 1.2 * avgSubSalary) {
+               
+                eDetails.setSalaryDifferenece(emp.getSalary()- 1.2 * avgSubSalary);
+                result.add(eDetails);
             }
         }
         return result;
     }
 
-    public static List<Employee> employeesWithSalaryGreaterThan50PercentOfSubordinates(List<Employee> employees) {
-        List<Employee> result = new java.util.ArrayList<>();
+    public static List<EmployeeDetails> employeesWithSalaryGreaterThan50PercentOfSubordinates(List<Employee> employees) {
+        List<EmployeeDetails> result = new java.util.ArrayList<>();
         for (Employee emp : employees) {
+            EmployeeDetails eDetails = new EmployeeDetails();
+            eDetails.setId(emp.getId());
+            eDetails.setFirstName(emp.getFirstName());
+            eDetails.setLastName(emp.getLastName());
+            eDetails.setSalary(emp.getSalary());
+            eDetails.setManagerId(emp.getManagerId());
+
             double avgSubSalary = averageSalaryOfDirectSubordinates(employees, emp.getId());
-            if (avgSubSalary > 0 && emp.getSalary() > 0.5 * avgSubSalary) {
-                result.add(emp);
+            if (avgSubSalary > 0 && emp.getSalary() > 1.5 * avgSubSalary) {
+                eDetails.setSalaryDifferenece(emp.getSalary() - 1.5 * avgSubSalary);
+                result.add(eDetails);
             }
         }
         return result;
     }
 
-    public static List<Employee> employeesWithDepthGreaterThanFour(List<Employee> employees) {
-        List<Employee> result = new java.util.ArrayList<>();
+    public static List<EmployeeDetails> employeesWithDepthGreaterThanFour(List<Employee> employees) {
+        List<EmployeeDetails> result = new java.util.ArrayList<>();
         for (Employee emp : employees) {
+                EmployeeDetails eDetails = new EmployeeDetails();
+                eDetails.setId(emp.getId());
+                eDetails.setFirstName(emp.getFirstName());
+                eDetails.setLastName(emp.getLastName());
+                eDetails.setSalary(emp.getSalary());
+                eDetails.setManagerId(emp.getManagerId());
+
             int depth = getEmployeeDepth(employees, emp.getId());
             if (depth > 4) {
-                result.add(emp);
+                eDetails.setDepth(depth);
+                result.add(eDetails);
             }
         }
         return result;
@@ -71,10 +106,10 @@ public class App {
         }
         int depth = 0;
         String managerId = target.getManagerId();
-        while (managerId != null) {
+        while (managerId != null && !managerId.equals("")) {
             boolean found = false;
             for (Employee emp : employees) {
-                if (emp.getId() == managerId) {
+                if (managerId.equalsIgnoreCase(emp.getId())) {
                     depth++;
                     managerId = emp.getManagerId();
                     found = true;

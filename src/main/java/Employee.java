@@ -2,12 +2,12 @@ public class Employee {
     private String id;
     private String firstName;
     private String lastName;
-    private Integer salary;
+    private Double salary;
     private String managerId;
     public Employee() {
         super();
     }
-public Employee(String id, String firstName, String lastName, Integer salary, String managerId) {
+public Employee(String id, String firstName, String lastName, Double salary, String managerId) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -39,11 +39,11 @@ public void setLastName(String lastName) {
     this.lastName = lastName;
 }
 
-public Integer getSalary() {
+public Double getSalary() {
     return salary;
 }
 
-public void setSalary(Integer salary) {
+public void setSalary(Double salary) {
     this.salary = salary;
 }
 
