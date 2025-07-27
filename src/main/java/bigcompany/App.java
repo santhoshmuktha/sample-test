@@ -1,3 +1,4 @@
+package bigcompany;
 import java.io.IOException;
 import java.util.List;
 import com.opencsv.bean.CsvToBean;
@@ -6,18 +7,49 @@ import java.io.FileReader;
 
 public class App {
     public static void main(String[] args) {
-        List<Employee> employees = App.loadEmployees("src/main/resources/employee.csv");
+        if (args.length == 0) {
+            System.out.println("Please provide the path to the employee CSV file.");
+            return;
+        }
+        App.findEmpployeeDEtails(args[0]);
+       
+    }
+
+    public static void findEmpployeeDEtails(String employeeFilePath){
+         List<Employee> employees = App.loadEmployees(employeeFilePath);
         List<EmployeeDetails> salaryLessThan20Percent = App.employeesWithSalaryLessThan20PercentOfSubordinates(employees);
-        System.out.println("Employees with salary less than 20% of their subordinates' average");
-        System.out.println(salaryLessThan20Percent);
+        System.out.println("####### which managers earn less than they should, and by how much #######");
+        // System.out.println(salaryLessThan20Percent);
+
+         for (EmployeeDetails emp : salaryLessThan20Percent) {
+            System.out.println(emp.getId() + " - "+ emp.getFirstName() + " " + emp.getLastName() + " earns " + emp.getSalary() + " which is less by " + emp.getSalaryDifferenece() + " than the benchmark");
+        }
+
+
+
+        System.out.println();
+        System.out.println();
 
         List<EmployeeDetails> salaryGreaterThan50Percent = App.employeesWithSalaryGreaterThan50PercentOfSubordinates(employees);
-        System.out.println("Employees with salary greater than 50% of their subordinates' average");
-        System.out.println(salaryGreaterThan50Percent);
+        System.out.println("####### which managers earn more than they should, and by how much #######");
+
+        //System.out.println(salaryGreaterThan50Percent);
+        for (EmployeeDetails emp : salaryGreaterThan50Percent) {
+            System.out.println(emp.getId() + " - "+ emp.getFirstName() + " " + emp.getLastName() + " earns " + emp.getSalary() + " which is more by " + emp.getSalaryDifferenece() + " than the benchmark");
+        }
+
+        System.out.println();
+        System.out.println();
 
         List<EmployeeDetails> depthGreaterThanFour = App.employeesWithDepthGreaterThanFour(employees);
-        System.out.println("Employees with depth greater than four");
-        System.out.println(depthGreaterThanFour);
+        System.out.println("####### which employees have a reporting line which is too long, and by how much #######");
+        //System.out.println(depthGreaterThanFour);
+         for (EmployeeDetails emp : depthGreaterThanFour) {
+            System.out.println(emp.getId() + " - "+ emp.getFirstName() + " " + emp.getLastName() + " has a depth of  " + emp.getDepth() + " which is more than the benchmark");
+        }
+
+        System.out.println();
+        System.out.println();
     }
 
     public static List<Employee> loadEmployees(String filePath) {

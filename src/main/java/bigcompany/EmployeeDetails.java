@@ -1,3 +1,4 @@
+package bigcompany;
 public class EmployeeDetails extends Employee{
     
     double salaryDifferenece;

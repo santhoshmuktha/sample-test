@@ -1,18 +1,20 @@
-# My Maven Java Project
+# Sample-test
 
-This is a simple Maven Java project that demonstrates the basic structure and functionality of a Maven application.
+This is a sample java test project provides the analysis of employees of the org interms of Salary and level order.
 
+# Assumptions
+- This app expected the well formatted csv, a sample mentioned at - `src\main\resources\employee.csv`
 ## Project Structure
 
 ```
 sample-test
 ├── src
 │   ├── main
-│   │   └── java
-│   │       └── App.java
+│   │   └── java\bigcompany
+│   │       └── App.java ..
 │   └── test
-│       └── java
-│           └── AppTest.java
+│       └── java\bigcompany
+│           └── AppTest.java ..
 ├── pom.xml
 └── README.md
 ```
@@ -38,13 +40,6 @@ To build and run this project, you need to have Maven installed on your machine.
    mvn clean install
    ```
 
-### Running the Application
-
-After building the project, you can run the application using the following command:
-```
-mvn exec:java -Dexec.mainClass="App"
-```
-
 ### Running Tests
 
 To run the unit tests, use the following command:
@@ -52,6 +47,11 @@ To run the unit tests, use the following command:
 mvn test
 ```
 
-## License
+### Running the Application
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+After building the project, you can run the application using the following command:
+
+```
+   java -jar target/sample-test-1.0-SNAPSHOT-jar-with-dependencies.jar src\main\resources\employee.csv
+```
+
